@@ -1,6 +1,5 @@
 import pandas as pd
 import numpy as np
-from team import Team
 from helpers import NewTeam, StandingsUpdate
 
 #Here we make the object that will store the information for each team
