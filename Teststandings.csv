@@ -1,0 +1,31 @@
+,Team_Name,Division_id,Conference_id,Wins,Losses,DivLeader,Seed,Date Elim
+0,Boston Celtics,Atlantic,East,23,15,0,0,0
+1,Brooklyn Nets,Atlantic,East,8,29,0,0,0
+2,New York Knicks,Atlantic,East,17,21,0,0,0
+3,Philadelphia 76ers,Atlantic,East,10,25,0,0,0
+4,Toronto Raptors,Atlantic,East,25,13,0,0,0
+5,Chicago Bulls,Central,East,19,20,0,0,0
+6,Cleveland Cavaliers,Central,East,28,9,0,0,0
+7,Detroit Pistons,Central,East,18,21,0,0,0
+8,Indiana Pacers,Central,East,20,18,0,0,0
+9,Milwaukee Bucks,Central,East,19,18,0,0,0
+10,Atlanta Hawks,Southeast,East,22,16,0,0,0
+11,Charlotte Hornets,Southeast,East,20,19,0,0,0
+12,Miami Heat,Southeast,East,11,29,0,0,0
+13,Orlando Magic,Southeast,East,16,23,0,0,0
+14,Washington Wizards,Southeast,East,19,18,0,0,0
+15,Denver Nuggets,Northwest,West,14,23,0,0,0
+16,Minnesota Timberwolves,Northwest,West,12,26,0,0,0
+17,Oklahoma City Thunder,Northwest,West,23,16,0,0,0
+18,Portland Trail Blazers,Northwest,West,17,23,0,0,0
+19,Utah Jazz,Northwest,West,24,16,0,0,0
+20,Golden State Warriors,Pacific,West,33,6,0,0,0
+21,LA Clippers,Pacific,West,26,14,0,0,0
+22,Los Angeles Lakers,Pacific,West,15,27,0,0,0
+23,Phoenix Suns,Pacific,West,12,26,0,0,0
+24,Sacramento Kings,Pacific,West,15,22,0,0,0
+25,Dallas Mavericks,Southwest,West,11,27,0,0,0
+26,Houston Rockets,Southwest,West,31,9,0,0,0
+27,Memphis Grizzlies,Southwest,West,24,16,0,0,0
+28,New Orleans Pelicans,Southwest,West,15,24,0,0,0
+29,San Antonio Spurs,Southwest,West,30,8,0,0,0

@@ -35,21 +35,48 @@ def Seed(dfStandings, Date, dfRegSeason, tiebreak, tiebreakIndex, gameIndex):
 	Sorted = pd.DataFrame()
 	while(len(Sorted)<15): 
 		counter = 0
-		Highest = -1
-		while(counter!=len(dfWest)): #We go through the teams, find highest seed, then take it out and repeat
-			if Highest == -1: #If this is the first team we are examining
-				#print(dfWest)
-				Highest = dfWest[counter]
+		HighestRec = 0
+		while(counter<len(dfWest)): #We go through the teams, find highest seed, then take it out and repeat
+			CurrentTeam = dfWest.iloc[[counter]]
+			CurrentRec = pd.to_numeric(CurrentTeam['W/L'])
 
+			if HighestRec == 0: #if this is the first team we are looking at
+				Highest = CurrentTeam
+				HighestRec = pd.to_numeric(Highest['W/L'])
+			else:
+
+				if CurrentRec > HighestRec:
+					Highest = CurrentTeam
+					HighestRec = pd.to_numeric(Highest['W/L'])
+				
+				elif CurrentRec == HighestRec:
+					Highest = tiebreak(Highest, CurrentTeam, tiebreak, tiebreakIndex)
+					HighestRec = pd.to_numeric(Highest['W/L'])
+				#print(dfWest['Team_Name'])
+				#print(Highest['Team_Name'])
+			counter += 1
+			dfWest = dfWest[~dfWest['Team_Name'].isin(Highest['Team_Name'])]
+				
+		Sorted.append(Highest)
+	
+	print(dfWest)
+	print('\n')
+	print(Sorted)
 	Sorted = pd.DataFrame()
 
-		dfNewStandings = pd.DataFrame()
+	dfNewStandings = pd.DataFrame()
 
 	#for team in range(len(dfStandings) - 1):
 
 
 	return dfStandings
 
+def tiebreak(Team1, Team2, arrTiebreak, tiebreakIndex):
+	if(arrTiebreak[tiebreakIndex[Team1], tiebreakIndex[Team2]] > arrTiebreak[tiebreakIndex[Team2], tiebreakIndex[Team1]]):
+		return Team1 #If Team1 won the season series, they win the tiebreaker
+	else:
+		return Team2
+	#CODE SECOND LAYER OF TIEBREAKER
 
 
 def ElimFromPlayoffs(dfStandings, dfRegSeason, arrTiebreak, tiebreakIndex, game):

@@ -17,7 +17,6 @@ dfDivisionConfInfo = pd.read_csv('DivisionInfo.csv', encoding = 'ISO-8859-1')
 #and adding some other columns that we will want to track like Wins, Losses, etc.
 dfStandings	= AddTeams(dfDivisionConfInfo)
 
-print(dfStandings)
 #We also make a 30x30 array that has the tiebreak results of each team. Each team
 #has an index value assigned below. Say a team with index i beats a team with index
 #j - then the matrix value at array(i, j) will be incremented by 1. If array(i, j)>
@@ -27,8 +26,8 @@ tiebreak = np.zeros((31, 31))
 TeamIndex = {'Boston Celtics': 1, 'Brooklyn Nets': 2, 'New York Knicks': 3, 'Philadelphia 76ers': 4, 'Toronto Raptors': 5, 'Chicago Bulls': 6, 'Cleveland Cavaliers': 7, 'Detroit Pistons': 8, 'Indiana Pacers': 9, 'Milwaukee Bucks': 10, 'Atlanta Hawks': 11, 'Charlotte Hornets': 12, 'Miami Heat': 13, 'Orlando Magic': 14, 'Washington Wizards': 15, 'Denver Nuggets': 16, 'Minnesota Timberwolves': 17, 'Oklahoma City Thunder': 18, 'Portland Trail Blazers': 19, 'Utah Jazz': 20, 'Golden State Warriors': 21, 'LA Clippers': 22, 'Los Angeles Lakers': 23, 'Phoenix Suns': 24, 'Sacramento Kings': 25, 'Dallas Mavericks': 26, 'Houston Rockets': 27, 'Memphis Grizzlies': 28, 'New Orleans Pelicans': 29, 'San Antonio Spurs': 30}
 
 bool = False
-for game in range(0, 576):
-for game in range(len(dfRegSeason)):
+for game in range(0, 581):
+#for game in range(len(dfRegSeason)):
 
 	#Giving current game data names that are easier to read
 	HomeTeam = dfRegSeason['Home Team'][game]
@@ -39,7 +38,7 @@ for game in range(len(dfRegSeason)):
 	
 
 	if not bool and TeamsCanBeEliminated:
-		print('game no: ' + str(game) + '\n')
+		print('game no: ' + str(game) + '\n' + 'Teams Can Be Elim: ' + str(TeamsCanBeEliminated) + '\n')
 		bool = True
 
 	try: 
@@ -67,5 +66,5 @@ for game in range(len(dfRegSeason)):
 		if (NextGameDate != Date and TeamsCanBeEliminated): #Only calculate standings after a full day of games - improves performance
 			NewSeeding(dfStandings, Date, dfRegSeason, tiebreak, TeamIndex, game)
 
-
+dfStandings.to_csv('Teststandings.csv')
 
