@@ -45,11 +45,7 @@ for game in range(0, 581):
 		NextGameDate = dfRegSeason['Date'][game+1]
 	except(KeyError):
 		NextGameDate = 0 #We are on the last game, and we want to re-seed. Setting it to 0 ensures re-seeding
-
-	#print('Home ' + str(HomeTeam) + ' Away ' + str(AwayTeam) + ' Winner ' + str(WinningTeam))
-	
-	#print(dfRegSeason['Home Team'][game])
-
+		
 	if WinningTeam == 'Home': #If winner of the current game is the Home team, then we report the Home team as the winner
 		tiebreak = UpdateTiebreak(tiebreak, HomeTeam, AwayTeam) #The season series is updated
 		dfStandings = UpdateRecord(dfStandings, HomeTeam, AwayTeam)
@@ -64,7 +60,8 @@ for game in range(0, 581):
 		dfStandings = UpdateRecord(dfStandings, AwayTeam, HomeTeam)
 
 		if (NextGameDate != Date and TeamsCanBeEliminated): #Only calculate standings after a full day of games - improves performance
-			NewSeeding(dfStandings, Date, dfRegSeason, tiebreak, TeamIndex, game)
+			dfStandings = Seed(dfStandings, Date, dfRegSeason, tiebreak, TeamIndex, game) 
+			dfStandings = ElimFromPlayoffs(dfStandings, dfRegSeason, tiebreak, TeamIndex, game)
 
 dfStandings.to_csv('Teststandings.csv')
 

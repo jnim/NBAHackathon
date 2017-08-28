@@ -38,26 +38,29 @@ def Seed(dfStandings, Date, dfRegSeason, tiebreak, tiebreakIndex, gameIndex):
 		HighestRec = 0
 		while(counter<len(dfWest)): #We go through the teams, find highest seed, then take it out and repeat
 			CurrentTeam = dfWest.iloc[[counter]]
-			CurrentRec = pd.to_numeric(CurrentTeam['W/L'])
+			CurrentRec = float(CurrentTeam['W/L'])
 
 			if HighestRec == 0: #if this is the first team we are looking at
 				Highest = CurrentTeam
-				HighestRec = pd.to_numeric(Highest['W/L'])
+				HighestRec = float(Highest['W/L'])
 			else:
 
 				if CurrentRec > HighestRec:
 					Highest = CurrentTeam
-					HighestRec = pd.to_numeric(Highest['W/L'])
+					HighestRec = float(Highest['W/L'])
 				
 				elif CurrentRec == HighestRec:
-					Highest = tiebreak(Highest, CurrentTeam, tiebreak, tiebreakIndex)
-					HighestRec = pd.to_numeric(Highest['W/L'])
+					Highest = Tiebreaker(Highest, CurrentTeam, tiebreak, tiebreakIndex)
+					HighestRec = float(Highest['W/L'])
 				#print(dfWest['Team_Name'])
 				#print(Highest['Team_Name'])
 			counter += 1
-			dfWest = dfWest[~dfWest['Team_Name'].isin(Highest['Team_Name'])]
-				
+			print('counter updated')
+			print(HighestRec)
+
+		dfWest = dfWest[~dfWest['Team_Name'].isin(Highest['Team_Name'])]
 		Sorted.append(Highest)
+		print('Team filtered')
 	
 	print(dfWest)
 	print('\n')
@@ -71,15 +74,27 @@ def Seed(dfStandings, Date, dfRegSeason, tiebreak, tiebreakIndex, gameIndex):
 
 	return dfStandings
 
-def tiebreak(Team1, Team2, arrTiebreak, tiebreakIndex):
-	if(arrTiebreak[tiebreakIndex[Team1], tiebreakIndex[Team2]] > arrTiebreak[tiebreakIndex[Team2], tiebreakIndex[Team1]]):
+def Tiebreaker(Team1, Team2, arrTiebreak, tiebreakIndex):
+	print('Team_Name')
+	print('\n')
+	
+	if(arrTiebreak[tiebreakIndex[Team1['Team_Name']], tiebreakIndex[Team2['Team_Name']]] > arrTiebreak[tiebreakIndex[Team2], tiebreakIndex[Team1]]):
 		return Team1 #If Team1 won the season series, they win the tiebreaker
 	else:
 		return Team2
-	#CODE SECOND LAYER OF TIEBREAKER
+
+		#I ran out of time before I coded the second layer of tiebreakers - doing it 
+		#by Division and then record against one's own conference
 
 
 def ElimFromPlayoffs(dfStandings, dfRegSeason, arrTiebreak, tiebreakIndex, game):
+	#I ran out of time, so this is what I intended to do:
+	#For each team below the 9th seed, I would go through the rest of the games
+	#of the regular season and try and create an optimal scenario: the team I am 
+	#simulating for wins every game, and for games with other teams, the lower seeded
+	#team wins unless both teams have a higher seeded than my team, in which case the 
+	#lower seeded team loses (to help my team catchup to them and take their spot)
+
 
 	return 0
 
