@@ -14,7 +14,6 @@ def UpdateRecord(dfStandings, TeamWon, TeamLost):
 	Won = dfStandings.query('Team_Name == @TeamWon')['Wins']
 	dfStandings.loc[dfStandings['Team_Name'] == TeamWon, 'Wins'] = Won + 1
 	
-	#print(dfStandings.loc[dfStandings['Team_Name'] == TeamLost])
 	Lost = dfStandings.query('Team_Name == @TeamLost')['Losses']
 	dfStandings.loc[dfStandings['Team_Name'] == TeamLost, 'Losses'] = Lost + 1
 	
@@ -33,6 +32,15 @@ def Seed(dfStandings, Date, dfRegSeason, tiebreak, tiebreakIndex, gameIndex):
 	dfEast = dfEast.reset_index(drop = True)
 	
 	Sorted = pd.DataFrame()
+
+	#The while loops below don't work, but the inner one loops through the list, 
+	#iterating through the teams, and setting 'highest' equal to the team with the 
+	#highest win ratio. If there is a tie, that is handled by the tiebreaker function.
+	#Once it has gone through all the teams, the team with the Highest win ratio is 
+	#filtered out and added to the 'Sorted' dataframe. The inner loop then repeats
+	#for the rest of the teams. This occurs until the length of Sorted is 15 - which means
+	#all fifteen teams from the conference have been sorted.
+
 	while(len(Sorted)<15): 
 		counter = 0
 		HighestRec = 0
@@ -52,24 +60,19 @@ def Seed(dfStandings, Date, dfRegSeason, tiebreak, tiebreakIndex, gameIndex):
 				elif CurrentRec == HighestRec:
 					Highest = Tiebreaker(Highest, CurrentTeam, tiebreak, tiebreakIndex)
 					HighestRec = float(Highest['W/L'])
-				#print(dfWest['Team_Name'])
-				#print(Highest['Team_Name'])
+				
 			counter += 1
 			print('counter updated')
 			print(HighestRec)
 
 		dfWest = dfWest[~dfWest['Team_Name'].isin(Highest['Team_Name'])]
 		Sorted.append(Highest)
-		print('Team filtered')
+		
+		#Repeat above loop for East Teams
 	
-	print(dfWest)
-	print('\n')
-	print(Sorted)
 	Sorted = pd.DataFrame()
 
 	dfNewStandings = pd.DataFrame()
-
-	#for team in range(len(dfStandings) - 1):
 
 
 	return dfStandings
@@ -89,14 +92,12 @@ def Tiebreaker(Team1, Team2, arrTiebreak, tiebreakIndex):
 
 def ElimFromPlayoffs(dfStandings, dfRegSeason, arrTiebreak, tiebreakIndex, game):
 	#I ran out of time, so this is what I intended to do:
-	#For each team below the 9th seed, I would go through the rest of the games
+	#For each team below the 8th seed, I would go through the rest of the games
 	#of the regular season and try and create an optimal scenario: the team I am 
 	#simulating for wins every game, and for games with other teams, the lower seeded
 	#team wins unless both teams have a higher seeded than my team, in which case the 
-	#lower seeded team loses (to help my team catchup to them and take their spot)
+	#lower seeded team loses (to help my team catch up to them and take their spot)
 
-
-	return 0
 
 def HasPlayed42Games(dfStandings):
 	np.where(dfStandings['Wins'] + dfStandings['Losses'] >= 42, 1, 0)
